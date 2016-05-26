@@ -44,7 +44,11 @@ module.exports = {
         var score = ageScore + calScore + locScore + orgScore + sizeScore + stateScore + trainingScore + traitsScore;
         var divisor = ageWgt + calWgt + locWgt + orgWgt + sizeWgt + stateWgt + trainingWgt + traitsWgt;
 
-        return findDecimal(score, divisor);
+        return this.findDecimal(score, divisor);
+    },
+    
+    matchPercentMutual: function(score1, score2) {
+        return Math.sqrt(score1 * score2);
     }
 
 };
