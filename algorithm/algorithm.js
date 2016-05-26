@@ -13,7 +13,7 @@ var calc = require('./calculators');
 function match(memberOne, memberTwo) {
     // establish all match percentages for individual elements
     // if a non-negotiable element is -1, stop the loop and return a non-match
-    var ageMatch = matchAge(memberOne.ages, memberTwo.ages);
+    var ageMatch = matchAge(memberOne.ageRanges, memberTwo.ageRanges);
     if (ageMatch === (-1)) {
         return 0;
     }
@@ -41,3 +41,5 @@ function match(memberOne, memberTwo) {
 
     return matchPercent;
 }
+
+module.exports = match;
