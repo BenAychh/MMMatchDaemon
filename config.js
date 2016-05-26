@@ -1,5 +1,5 @@
 module.exports = {
 
-    cutoff: 80,
+    cutoff: 80
 
 }
