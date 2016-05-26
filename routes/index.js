@@ -61,6 +61,8 @@ router.post('/notify', (req, res, next) => {
                                                         return;
                                                     })
                                             });
+                                    } else {
+                                        return;
                                     }
                                 }
                             })
