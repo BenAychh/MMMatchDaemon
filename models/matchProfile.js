@@ -34,7 +34,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    trainingImportance: {
+    trainingWgt: {
         required: true,
         type: Number,
         min: 1,
@@ -52,7 +52,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    locTypesImportance: {
+    locTypesWgt: {
         required: true,
         type: Number,
         min: 1,
@@ -70,7 +70,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    orgTypesImportance: {
+    orgTypesWgt: {
         required: true,
         type: Number,
         min: 1,
@@ -88,7 +88,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    sizesImportance: {
+    sizesWgt: {
         required: true,
         type: Number,
         min: 1,
@@ -106,7 +106,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    calsImportance: {
+    calsWgt: {
         required: true,
         type: Number,
         min: 1,
@@ -124,7 +124,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    statesImportance: {
+    statesWgt: {
         required: true,
         type: Number,
         min: 1,
@@ -142,7 +142,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    traitsImportance: {
+    traitsWgt: {
         required: true,
         type: Number,
         min: 1,
@@ -160,7 +160,7 @@ var MatchProfileSchema = new Schema({
             'Error, {PATH} must be unique values. Value: `{VALUE}`'
         ]
     },
-    ageRangesImportance: {
+    ageRangesWgt: {
         required: true,
         type: Number,
         min: 1,
