@@ -34,8 +34,8 @@ function match(memberOne, memberTwo) {
     var sizeMatch = matchSize(memberOne.sizes, memberTwo.sizes);
     var traitMatch = matchTraits(memberOne.traits, memberTwo.traits);
 
-    var matchPercentMemberOne = calc.matchPercentOneWay(ageMatch, ageMatchWeight, calMatch, calMatchWeight, locMatch, locMatchWeight, orgMatch, orgMatchWeight, sizeMatch, sizeMatchWeight, stateMatch, stateMatchWeight, trainingMatch, trainingMatchWeight, traitMatch, traitMatchWeight);
-    var matchPercentMemberTwo = calc.matchPercentOneWay(ageMatch, ageMatchWeight, calMatch, calMatchWeight, locMatch, locMatchWeight, orgMatch, orgMatchWeight, sizeMatch, sizeMatchWeight, stateMatch, stateMatchWeight, trainingMatch, trainingMatchWeight, traitMatch, traitMatchWeight);
+    var matchPercentMemberOne = calc.matchPercentOneWay(ageMatch, memberOne.ageRangesWgt, calMatch, memberOne.calsWgt, locMatch, memberOne.locTypesWgt, orgMatch, memberOne.orgTypesWgt, sizeMatch, memberOne.sizesWgt, stateMatch, memberOne.statesWgt, trainingMatch, memberOne.trainingWgt, traitMatch, memberOne.traitsWgt);
+    var matchPercentMemberTwo = calc.matchPercentOneWay(ageMatch, memberTwo.ageRangesWgt, calMatch, memberTwo.calsWgt, locMatch, memberTwo.locTypesWgt, orgMatch, memberTwo.orgTypesWgt, sizeMatch, memberTwo.sizesWgt, stateMatch, memberTwo.statesWgt, trainingMatch, memberTwo.trainingWgt, traitMatch, memberTwo.traitsWgt);
 
     var matchPercent = calc.matchPercentMutual(matchPercentMemberOne, matchPercentMemberTwo).toFixed(2);
 
