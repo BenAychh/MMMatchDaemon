@@ -46,12 +46,13 @@ describe('notify route', () => {
                 res.status.should.equal(200);
                 res.should.be.json;
                 res.body.message.should.equal('Match suggestions updated for teacher1@teach.com');
-                // db.potentialMatches.findOne({
-                //         email: 'teacher1@teach.com'
-                //     })
-                //     .then(profile => {
-                //         profile.matchSuggestions[0].email.should.equal('blah');
-                //     })
+                db.potentialMatches.findOne({
+                        email: 'teacher1@teach.com'
+                    })
+                    .then(profile => {
+                        console.log(profile);
+                        profile.matchSuggestions[0].email.should.equal('blah');
+                    })
                 done();
             })
     });
