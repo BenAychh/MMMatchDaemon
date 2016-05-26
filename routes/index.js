@@ -23,55 +23,56 @@ router.post('/notify', (req, res, next) => {
                     })
                     .then(userProfile => {
                         return allUsers.forEach((currentProfile, ind) => {
-                                if (currentProfile.email !== userEmail) {
-                                    currentEmail = currentProfile.email;
-                                    matchPercent = matchAlgorithm(userProfile, currentProfile);
-                                    console.log(currentProfile.email, matchPercent);
-                                    if (matchPercent >= config.cutoff) {
-                                        return db.potentialMatches.findAndModify({
-                                                query: {
-                                                    email: userEmail
-                                                },
-                                                update: {
-                                                    $push: {
-                                                        matchSuggestions: {
-                                                            email: currentEmail,
-                                                            perc: matchPercent
-                                                        }
+                            if (currentProfile.email !== userEmail) {
+                                currentEmail = currentProfile.email;
+                                matchPercent = Number(matchAlgorithm(userProfile, currentProfile));
+                                if (matchPercent >= config.cutoff) {
+                                    return db.potentialMatches.findAndModify({
+                                            query: {
+                                                email: userEmail
+                                            },
+                                            update: {
+                                                $push: {
+                                                    matchSuggestions: {
+                                                        email: currentEmail,
+                                                        perc: matchPercent
                                                     }
-                                                },
-                                                new: true
-                                            })
-                                            .then(updatedProf => {
-                                                return db.potentialMatches.findAndModify({
-                                                        query: {
-                                                            email: currentEmail
-                                                        },
-                                                        update: {
-                                                            $push: {
-                                                                matchSuggestions: {
-                                                                    email: userEmail,
-                                                                    perc: matchPercent
-                                                                }
+                                                }
+                                            },
+                                            new: true
+                                        })
+                                        .then(updatedProf => {
+                                            return db.potentialMatches.findAndModify({
+                                                    query: {
+                                                        email: currentEmail
+                                                    },
+                                                    update: {
+                                                        $push: {
+                                                            matchSuggestions: {
+                                                                email: userEmail,
+                                                                perc: matchPercent
                                                             }
-                                                        },
-                                                        new: true
-                                                    })
-                                                    .then(updatedProfile => {
-                                                        return;
-                                                    })
-                                            });
-                                    } else {
-                                        return;
-                                    }
+                                                        }
+                                                    },
+                                                    new: true
+                                                })
+                                                .then(updatedProfile => {
+                                                    return;
+                                                })
+                                        });
+                                } else {
+                                    return;
                                 }
-                            })
-                            .then(() => {
-                                res.status(200).json({
-                                    status: 200,
-                                    message: 'Match suggestions updated for ' + userEmail
-                                })
-                            })
+                            } else {
+                                return;
+                            }
+                        })
+                    })
+                    .then(() => {
+                        res.status(200).json({
+                            status: 200,
+                            message: 'Match suggestions updated for ' + userEmail
+                        })
                     })
             })
     } else {

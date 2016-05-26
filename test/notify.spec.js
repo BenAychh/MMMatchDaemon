@@ -50,7 +50,6 @@ describe('notify route', () => {
                         email: 'teacher1@teach.com'
                     })
                     .then(profile => {
-                        console.log(profile);
                         profile.matchSuggestions[0].email.should.equal('blah');
                     })
                 done();

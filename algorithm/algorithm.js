@@ -14,17 +14,17 @@ function match(memberOne, memberTwo) {
 
     // establish all match percentages for individual elements
     // if a non-negotiable element is -1, stop the loop and return a non-match
-    let ageMatch = matchAge(memberOne.ageRanges, memberTwo.ageRanges);
+    let ageMatch = matchAge(memberTwo.ageRanges, memberOne.ageRanges);
     if (ageMatch === (-1)) {
         return 0;
     }
 
-    let stateMatch = matchState(memberOne.states, memberTwo.states);
+    let stateMatch = matchState(memberTwo.states, memberOne.states);
     if (stateMatch === (-1)) {
         return 0;
     }
 
-    let trainingMatch = matchTraining(memberOne.training, memberTwo.training);
+    let trainingMatch = matchTraining(memberTwo.training, memberOne.training);
     if (trainingMatch === (-1)) {
         return 0;
     }
