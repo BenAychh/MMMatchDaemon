@@ -77,7 +77,7 @@ router.post('/notify', (req, res, next) => {
             })
     } else {
         // remove deactivated users from all match arrays if update is false
-        return db.potentialMatches.update({
+        return db.potentialMatches.update({}, {
             $pull: {
                 matchSuggestions: {
                     email: userEmail,
@@ -86,8 +86,10 @@ router.post('/notify', (req, res, next) => {
                     }
                 }
             }
-        })
-    }
+        }, {
+            multi: true
+        });
+    };
 });
 
 module.exports = router;
