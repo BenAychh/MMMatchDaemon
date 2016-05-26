@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express');
 const router = express.Router();
 const pmongo = require('promised-mongo');
@@ -36,7 +38,7 @@ router.post('/notify', (req, res, next) => {
                         email: userEmail
                     })
                     .then(userProfile => {
-                        allUsers.forEach(currentProfile => {
+                        return allUsers.forEach(currentProfile => {
                             currentEmail = currentProfile.email;
                             matchPercent = matchAlgorithm(userProfile, currentProfile);
                             if (matchPercent >= config.cutoff) {
@@ -67,11 +69,17 @@ router.post('/notify', (req, res, next) => {
                                                     }
                                                 }
                                             }
-                                        })
+                                        });
                                     })
                             } else {
                                 return;
                             }
+                        })
+                    })
+                    .then(() => {
+                        res.status(200).json({
+                            status: 200,
+                            message: 'Match suggestions updated for ' + userEmail
                         })
                     })
             })

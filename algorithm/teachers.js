@@ -1,3 +1,5 @@
+'use strict'
+
 let teacher1 = {
     email: "teacher1@teach.com",
     training: [1],

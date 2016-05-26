@@ -1,3 +1,5 @@
+'use strict'
+
 let school1 = {
     email: "school1@teach.com",
     isTeacher: false,

@@ -1,5 +1,3 @@
-var memberOne = require('./memberOne1');
-var memberTwo = require('./memberTwo1');
 var matchState = require('./matchers/matchState');
 var matchAge = require('./matchers/matchAge');
 var matchTraining = require('./matchers/matchTraining');
