@@ -46,7 +46,7 @@ module.exports = {
 
         return this.findDecimal(score, divisor);
     },
-    
+
     matchPercentMutual: function(score1, score2) {
         return Math.sqrt(score1 * score2);
     }

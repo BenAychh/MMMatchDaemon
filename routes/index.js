@@ -26,6 +26,7 @@ router.post('/notify', (req, res, next) => {
                                 if (currentProfile.email !== userEmail) {
                                     currentEmail = currentProfile.email;
                                     matchPercent = matchAlgorithm(userProfile, currentProfile);
+                                    console.log(currentProfile.email, matchPercent);
                                     if (matchPercent >= config.cutoff) {
                                         return db.potentialMatches.findAndModify({
                                                 query: {

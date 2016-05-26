@@ -11,10 +11,7 @@ const matchTraits = require('./matchers/matchTraits');
 const calc = require('./calculators');
 
 function match(memberOne, memberTwo) {
-    
-    if (memberTwo.email === 'school3@teach.com') {
-        console.log('school 3 makes it into algorithm');
-    }
+
     // establish all match percentages for individual elements
     // if a non-negotiable element is -1, stop the loop and return a non-match
     let ageMatch = matchAge(memberOne.ageRanges, memberTwo.ageRanges);
@@ -22,7 +19,7 @@ function match(memberOne, memberTwo) {
         return 0;
     }
 
-    let stateMatch = matchState(memberTwo.states, memberOne.states);
+    let stateMatch = matchState(memberOne.states, memberTwo.states);
     if (stateMatch === (-1)) {
         return 0;
     }

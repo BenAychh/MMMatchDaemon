@@ -61,7 +61,7 @@ let school3 = {
     statesWgt: 1,
     traits: [4, 5, 6, 20, 19, 16, 13],
     traitsWgt: 100,
-    agesRange: [1, 2, 3],
+    ageRanges: [1, 2, 3],
     ageRangesWgt: 100,
     matchSuggestions: []
 }
