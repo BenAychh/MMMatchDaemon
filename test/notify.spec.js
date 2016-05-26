@@ -4,23 +4,11 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
 const pmongo = require('promised-mongo');
+let db = require('../db');
 
 // seed data
 const teachers = require('../algorithm/teachers');
 const schools = require('../algorithm/schools');
-
-// setup Mongo
-const defaultMongoPort = 27017;
-let host = process.env.MD_PORT_27017_TCP_ADDR;
-if (host === null) {
-    host = 'localhost';
-}
-let port = process.env.MD_PORT_27017_TCP_PORT;
-if (port === null) {
-    port = defaultMongoPort;
-}
-let url = 'mongodb://' + host + ':' + port + '/potentialMatches';
-const db = pmongo(url, ['potentialMatches']);
 
 const server = require('../app');
 
@@ -28,18 +16,15 @@ chai.use(chaiHttp);
 
 describe('notify route', () => {
 
-    beforeEach(done => {
+    beforeEach(function(done) {
         db.dropDatabase();
         db.createCollection('potentialMatches');
         const bulk = db.potentialMatches.initializeOrderedBulkOp();
         teachers.forEach(teacher => {
-            return bulk.insert(teacher);
+            db.potentialMatches.save(teacher);
         });
         schools.forEach(school => {
-            return bulk.insert(school);
-        });
-        bulk.execute((err, res) => {
-            console.log('seed data bulk executed');
+            db.potentialMatches.save(school);
         });
         done();
     });
@@ -64,10 +49,10 @@ describe('notify route', () => {
                         email: 'teacher1@teach.com'
                     })
                     .then(profile => {
-                        profile.matchSuggestions[0].email.should.equal('school1@teach.com');
+                        console.log(profile);
+                        profile.matchSuggestions[0].email.should.equal('blah');
                     })
                 done();
             })
-    })
-
+    });
 });

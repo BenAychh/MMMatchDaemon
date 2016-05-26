@@ -9,20 +9,26 @@ var matchTraits = require('./matchers/matchTraits');
 var calc = require('./calculators');
 
 function match(memberOne, memberTwo) {
+    
+    console.log(memberOne);
+    console.log(memberTwo);
     // establish all match percentages for individual elements
     // if a non-negotiable element is -1, stop the loop and return a non-match
     var ageMatch = matchAge(memberOne.ageRanges, memberTwo.ageRanges);
     if (ageMatch === (-1)) {
+        console.log('no age match');
         return 0;
     }
 
     var stateMatch = matchState(memberOne.states, memberTwo.states);
     if (stateMatch === (-1)) {
+        console.log('no state match');
         return 0;
     }
 
     var trainingMatch = matchTraining(memberOne.training, memberTwo.training);
     if (trainingMatch === (-1)) {
+        console.log('no training match');
         return 0;
     }
 

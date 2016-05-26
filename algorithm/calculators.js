@@ -2,10 +2,10 @@ module.exports = {
 
     // does this teacher's choices match any of the school choices?
     someMatch: function(memOneArr, memTwoArr) {
-        var someMatch = memTwoArr.some((elOne) => {
-            return memOneArr.forEach((elTwo) => {
-                return elOne === elTwo
-            })
+        var someMatch = memTwoArr.some(elOne => {
+            for (i = 0; i < memOneArr.length; i++) {
+                return elOne === memOneArr[i];
+            }
         });
         return someMatch;
     },
