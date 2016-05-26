@@ -1,8 +1,3 @@
-var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
-var validations = require('./validations');
-var Schema = mongoose.Schema;
-mongoose.Promise = require('bluebird');
 var config = require('../config');
 
 
@@ -18,6 +13,10 @@ var MatchProfileSchema = new Schema({
             validations.validEmail,
             '{PATH} must be a valid email. Value: `{VALUE}`'
         ]
+    },
+    isTeacher: {
+        type: Boolean,
+        required: true
     },
     active: {
         type: Boolean,
@@ -187,9 +186,3 @@ var MatchProfileSchema = new Schema({
         }]
     }
 });
-
-MatchProfileSchema.plugin(uniqueValidator);
-
-var MatchProfile = mongoose.model('matchProfile', MatchProfileSchema);
-
-module.exports = MatchProfile;
