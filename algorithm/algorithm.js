@@ -20,7 +20,7 @@ function match(memberOne, memberTwo) {
         return 0;
     }
 
-    var stateMatch = matchState(memberOne.states, memberTwo.states);
+    var stateMatch = matchState(memberTwo.states, memberOne.states);
     if (stateMatch === (-1)) {
         console.log('no state match');
         return 0;
