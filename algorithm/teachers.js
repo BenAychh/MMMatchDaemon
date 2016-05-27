@@ -2,6 +2,8 @@
 
 let teacher1 = {
     email: "teacher1@teach.com",
+    isTeacher: true,
+    active: true,
     training: [1],
     trainingWgt: 1,
     locTypes: [1, 2, 3],
@@ -23,6 +25,8 @@ let teacher1 = {
 
 let teacher2 = {
     email: "teacher2@teach.com",
+    isTeacher: true,
+    active: true,
     training: [2],
     trainingWgt: 1,
     locTypes: [1, 2],
@@ -44,6 +48,8 @@ let teacher2 = {
 
 let teacher3 = {
     email: "teacher3@teach.com",
+    isTeacher: true,
+    active: true,
     training: [3],
     trainingWgt: 1,
     locTypes: [5],
@@ -65,6 +71,8 @@ let teacher3 = {
 
 let teacher4 = {
     email: "teacher4@teach.com",
+    isTeacher: true,
+    active: true,
     training: [4],
     trainingWgt: 1,
     locTypes: [1, 2, 3, 4],
@@ -86,6 +94,8 @@ let teacher4 = {
 
 let teacher5 = {
     email: "teacher5@teach.com",
+    isTeacher: true,
+    active: true,
     training: [5],
     trainingWgt: 1,
     locTypes: [4],

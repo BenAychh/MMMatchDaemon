@@ -2,6 +2,7 @@
 
 let school1 = {
     email: "school1@teach.com",
+    active: true,
     isTeacher: false,
     training: [1, 2],
     trainingWgt: 50,
@@ -25,6 +26,7 @@ let school1 = {
 let school2 = {
     email: "school2@teach.com",
     isTeacher: false,
+    active: true,
     training: [2, 3, 4],
     trainingWgt: 50,
     locTypes: [1],
@@ -47,6 +49,7 @@ let school2 = {
 let school3 = {
     email: "school3@teach.com",
     isTeacher: false,
+    active: true,
     training: [1, 5],
     trainingWgt: 10,
     locTypes: [4],
