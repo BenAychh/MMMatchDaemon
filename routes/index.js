@@ -9,9 +9,7 @@ let db = require('../db');
 // Run matches
 router.post('/notify', (req, res, next) => {
     const userEmail = req.body.email;
-    console.log(userEmail);
     const update = req.body.update;
-    console.log(update);
     let allUsers = [];
     if (!userEmail || update === undefined) {
         res.status(400).json({
