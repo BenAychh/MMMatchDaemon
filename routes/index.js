@@ -11,7 +11,7 @@ router.post('/notify', (req, res, next) => {
     const userEmail = req.body.email;
     const update = req.body.update;
     let allUsers = [];
-    if (!userEmail || update === undefined) {
+    if (userEmail === undefined || update === undefined) {
         res.status(400).json({
             status: 400,
             message: 'Please provide an email string and an update boolean'
