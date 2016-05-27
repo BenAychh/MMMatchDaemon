@@ -18,6 +18,7 @@ describe('notify route', () => {
 
     beforeEach(function(done) {
         db.dropDatabase();
+        db.createCollection('potentialMatches');
         teachers.forEach(teacher => {
             db.potentialMatches.save(teacher);
         });
@@ -47,7 +48,6 @@ describe('notify route', () => {
                         email: 'teacher1@teach.com'
                     })
                     .then(profile => {
-                        console.log(profile);
                         profile.matchSuggestions[0].email.should.equal('school1@teach.com');
                     })
                 done();

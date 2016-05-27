@@ -13,7 +13,6 @@ if (port === undefined) {
     port = defaultMongoPort;
 }
 let url = 'mongodb://' + host + ':' + port + '/potentialMatches';
-let db = pmongo(url);
-let potentialMatches = db.collection('potentialMatches');
+let db = pmongo(url, ['potentialMatches']);
 
 module.exports = db;
