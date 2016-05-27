@@ -158,7 +158,7 @@ describe('notify route', () => {
                 update: true
             })
             .end((err, res) => {
-                res.status.should.be(400);
+                res.status.should.equal(400);
                 res.should.be.json;
                 res.body.message.should.equal('Email does not match any profiles');
                 done();
