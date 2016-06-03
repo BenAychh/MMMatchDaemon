@@ -42,52 +42,48 @@ router.post('/notify', (req, res, next) => {
                                     } catch (err) {
                                         console.log(err);
                                     }
-
                                     if (matchPercent >= config.cutoff) {
-                                        return db.potentialMatches.findAndModify({
-                                                query: {
-                                                    email: userEmail
-                                                },
-                                                update: {
-                                                    $push: {
-                                                        matchSuggestions: {
-                                                            email: currentProfile.email,
-                                                            perc: matchPercent
-                                                        }
+                                        var promises = []
+                                        promises.push(db.potentialMatches.findAndModify({
+                                            query: {
+                                                email: userEmail
+                                            },
+                                            update: {
+                                                $addToSet: {
+                                                    matchSuggestions: {
+                                                        email: currentProfile.email,
+                                                        perc: matchPercent
                                                     }
-                                                },
-                                                new: true
-                                            })
-                                            .then(updatedProf => {
-                                                return db.potentialMatches.findAndModify({
-                                                        query: {
-                                                            email: currentProfile.email
-                                                        },
-                                                        update: {
-                                                            $push: {
-                                                                matchSuggestions: {
-                                                                    email: userEmail,
-                                                                    perc: matchPercent
-                                                                }
-                                                            }
-                                                        },
-                                                        new: true
-                                                    })
-                                                    .then(updatedProfile => {
-                                                        return;
-                                                    })
-                                            });
+                                                }
+                                            },
+                                            new: true
+                                        }));
+                                        promises.push(db.potentialMatches.findAndModify({
+                                            query: {
+                                                email: currentProfile.email
+                                            },
+                                            update: {
+                                                $addToSet: {
+                                                    matchSuggestions: {
+                                                        email: userEmail,
+                                                        perc: matchPercent
+                                                    }
+                                                }
+                                            },
+                                            new: true
+                                        }))
+                                        return Promise.all(promises);
                                     }
                                 }
                             }
-                        })
+                        });
                     })
-                    .then(() => {
-                        res.status(200).json({
-                            status: 200,
-                            message: 'Match suggestions updated for ' + userEmail
-                        })
-                    });
+            })
+            .then(() => {
+                res.status(200).json({
+                    status: 200,
+                    message: 'Match suggestions updated for ' + userEmail
+                })
             })
             .catch(err => {
                 res.status(400).json({
@@ -95,28 +91,27 @@ router.post('/notify', (req, res, next) => {
                     message: 'Email does not match any profiles'
                 })
             })
-
     } else {
-        // remove deactivated users from all match arrays if update is false
-        return db.potentialMatches.update({}, {
-                $pull: {
-                    matchSuggestions: {
-                        email: userEmail,
-                        perc: {
-                            $gt: 0
-                        }
+    // remove deactivated users from all match arrays if update is false
+    return db.potentialMatches.update({}, {
+            $pull: {
+                matchSuggestions: {
+                    email: userEmail,
+                    perc: {
+                        $gt: 0
                     }
                 }
-            }, {
-                multi: true
+            }
+        }, {
+            multi: true
+        })
+        .then(() => {
+            res.status(200).json({
+                status: 200,
+                message: userEmail + ' removed from matchSuggestions'
             })
-            .then(() => {
-                res.status(200).json({
-                    status: 200,
-                    message: userEmail + ' removed from matchSuggestions'
-                })
-            });
-    };
+        });
+};
 });
 
 module.exports = router;
