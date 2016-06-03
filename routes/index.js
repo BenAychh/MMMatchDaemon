@@ -11,6 +11,7 @@ router.post('/notify', (req, res, next) => {
     const userEmail = req.body.email;
     const update = req.body.update;
     let allUsers = [];
+    console.log(userEmail);
     if (userEmail === undefined || update === undefined) {
         res.status(400).json({
             status: 400,
@@ -26,6 +27,9 @@ router.post('/notify', (req, res, next) => {
                 email: userEmail
             })
             .then(profile => {
+                if (profile === null) {
+                    throw err;
+                }
                 userProfile = profile;
                 return db.potentialMatches.find().toArray()
                     .then(docs => {
@@ -39,41 +43,41 @@ router.post('/notify', (req, res, next) => {
                                         console.log(err);
                                     }
 
-                                        if (matchPercent >= config.cutoff) {
-                                            return db.potentialMatches.findAndModify({
-                                                    query: {
-                                                        email: userEmail
-                                                    },
-                                                    update: {
-                                                        $push: {
-                                                            matchSuggestions: {
-                                                                email: currentProfile.email,
-                                                                perc: matchPercent
-                                                            }
+                                    if (matchPercent >= config.cutoff) {
+                                        return db.potentialMatches.findAndModify({
+                                                query: {
+                                                    email: userEmail
+                                                },
+                                                update: {
+                                                    $push: {
+                                                        matchSuggestions: {
+                                                            email: currentProfile.email,
+                                                            perc: matchPercent
                                                         }
-                                                    },
-                                                    new: true
-                                                })
-                                                .then(updatedProf => {
-                                                    return db.potentialMatches.findAndModify({
-                                                            query: {
-                                                                email: currentProfile.email
-                                                            },
-                                                            update: {
-                                                                $push: {
-                                                                    matchSuggestions: {
-                                                                        email: userEmail,
-                                                                        perc: matchPercent
-                                                                    }
+                                                    }
+                                                },
+                                                new: true
+                                            })
+                                            .then(updatedProf => {
+                                                return db.potentialMatches.findAndModify({
+                                                        query: {
+                                                            email: currentProfile.email
+                                                        },
+                                                        update: {
+                                                            $push: {
+                                                                matchSuggestions: {
+                                                                    email: userEmail,
+                                                                    perc: matchPercent
                                                                 }
-                                                            },
-                                                            new: true
-                                                        })
-                                                        .then(updatedProfile => {
-                                                            return;
-                                                        })
-                                                });
-                                        }
+                                                            }
+                                                        },
+                                                        new: true
+                                                    })
+                                                    .then(updatedProfile => {
+                                                        return;
+                                                    })
+                                            });
+                                    }
                                 }
                             }
                         })

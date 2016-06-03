@@ -40,7 +40,6 @@ describe('notify route', () => {
                 update: true
             })
             .end((err, res) => {
-                console.log(res.body);
                 res.status.should.equal(200);
                 res.should.be.json;
                 res.body.message.should.equal('Match suggestions updated for school1@teach.com');
@@ -67,7 +66,6 @@ describe('notify route', () => {
                 update: true
             })
             .end((err, res) => {
-                console.log(res.body);
                 res.status.should.equal(200);
                 res.should.be.json;
                 res.body.message.should.equal('Match suggestions updated for teacher1@teach.com');
@@ -186,6 +184,7 @@ describe('notify route', () => {
                 update: true
             })
             .end((err, res) => {
+                console.log(res.body);
                 res.status.should.equal(400);
                 res.should.be.json;
                 res.body.message.should.equal('Email does not match any profiles');
