@@ -17,23 +17,49 @@ chai.use(chaiHttp);
 describe('notify route', () => {
 
     beforeEach(function(done) {
-        db.dropDatabase();
-        db.createCollection('potentialMatches');
-        teachers.forEach(teacher => {
-            db.potentialMatches.save(teacher);
-        });
+        db.potentialMatches.remove({});
         schools.forEach(school => {
             db.potentialMatches.save(school);
         });
+        teachers.forEach(teacher => {
+            db.potentialMatches.save(teacher);
+        });
         done();
     });
 
-    afterEach(done => {
-        db.dropDatabase();
+    afterEach(function(done) {
+        db.potentialMatches.remove({});
         done();
+    })
+
+    it('should make matches for a school user when update is true', function(done) {
+        chai.request(server)
+            .post('/notify')
+            .send({
+                email: 'school1@teach.com',
+                update: true
+            })
+            .end((err, res) => {
+                console.log(res.body);
+                res.status.should.equal(200);
+                res.should.be.json;
+                res.body.message.should.equal('Match suggestions updated for school1@teach.com');
+                db.potentialMatches.findOne({
+                        email: 'school1@teach.com'
+                    })
+                    .then(profile => {
+                        profile.matchSuggestions[0].email.should.equal('teacher1@teach.com');
+                        profile.matchSuggestions[0].perc.should.equal(0.8);
+                        profile.matchSuggestions[1].email.should.equal('teacher2@teach.com');
+                        profile.matchSuggestions[1].perc.should.equal(0.93);
+                        profile.matchSuggestions[2].email.should.equal('teacher6@teach.com');
+                        profile.matchSuggestions[2].perc.should.equal(0.90);
+                        done(0);
+                    });
+            });
     });
 
-    it('should make matches for a user when update is true', function(done) {
+    it('should make matches for a teacher user when update is true', function(done) {
         chai.request(server)
             .post('/notify')
             .send({
@@ -41,6 +67,7 @@ describe('notify route', () => {
                 update: true
             })
             .end((err, res) => {
+                console.log(res.body);
                 res.status.should.equal(200);
                 res.should.be.json;
                 res.body.message.should.equal('Match suggestions updated for teacher1@teach.com');
@@ -49,9 +76,12 @@ describe('notify route', () => {
                     })
                     .then(profile => {
                         profile.matchSuggestions[0].email.should.equal('school1@teach.com');
-                    })
-                done();
-            })
+                        profile.matchSuggestions[0].perc.should.equal(0.8);
+                        profile.matchSuggestions[1].email.should.equal('school5@teach.com');
+                        profile.matchSuggestions[1].perc.should.equal(0.98);
+                        done();
+                    });
+            });
     });
 
     it('should ignore any inactive users in the matching process', function(done) {
@@ -78,10 +108,8 @@ describe('notify route', () => {
                                 email: 'teacher1@teach.com'
                             })
                             .then(profile => {
-                                profile.matchSuggestions.should.eql([]);
-                                return;
-                            })
-                            .then(() => {
+                                profile.matchSuggestions[0].email.should.equal('school5@teach.com');
+                                profile.matchSuggestions[0].perc.should.equal(0.98);
                                 done();
                             });
                     });
@@ -111,7 +139,8 @@ describe('notify route', () => {
                                 email: 'teacher1@teach.com'
                             })
                             .then(profile => {
-                                profile.matchSuggestions.should.eql([]);
+                                profile.matchSuggestions[0].email.should.equal('school5@teach.com');
+                                profile.matchSuggestions[0].perc.should.equal(0.98);
                                 return;
                             })
                             .then(() => {
@@ -153,7 +182,7 @@ describe('notify route', () => {
         chai.request(server)
             .post('/notify')
             .send({
-                email: 'teacher6@teach.com',
+                email: 'teacher11@teach.com',
                 update: true
             })
             .end((err, res) => {
