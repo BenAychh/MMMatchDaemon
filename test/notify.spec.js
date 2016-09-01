@@ -32,7 +32,7 @@ describe('notify route', () => {
         done();
     })
 
-    xit('should make matches for a school user when update is true', function(done) {
+    it('should make matches for a school user when update is true', function(done) {
         chai.request(server)
             .post('/notify')
             .send({
@@ -58,7 +58,7 @@ describe('notify route', () => {
             });
     });
 
-    xit('should make matches for a teacher user when update is true', function(done) {
+    it('should make matches for a teacher user when update is true', function(done) {
         chai.request(server)
             .post('/notify')
             .send({
@@ -82,7 +82,7 @@ describe('notify route', () => {
             });
     });
 
-    xit('should ignore any inactive users in the matching process', function(done) {
+    it('should ignore any inactive users in the matching process', function(done) {
         db.potentialMatches.findAndModify({
                 query: {
                     email: 'school1@teach.com'
@@ -115,7 +115,7 @@ describe('notify route', () => {
 
     })
 
-    xit('should remove the user from others matchSuggestions array when deactivated', function(done) {
+    it('should remove the user from others matchSuggestions array when deactivated', function(done) {
         chai.request(server)
             .post('/notify')
             .send({
@@ -148,7 +148,7 @@ describe('notify route', () => {
             });
     });
 
-    xit('should return an error if the request body is missing the email parameter', function(done) {
+    it('should return an error if the request body is missing the email parameter', function(done) {
         chai.request(server)
             .post('/notify')
             .send({
@@ -162,7 +162,7 @@ describe('notify route', () => {
             });
     });
 
-    xit('should return an error if the request body is missing the update parameter', function(done) {
+    it('should return an error if the request body is missing the update parameter', function(done) {
         chai.request(server)
             .post('/notify')
             .send({
